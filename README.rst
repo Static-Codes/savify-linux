@@ -41,7 +41,9 @@ Savify
      :target: https://pyup.io/repos/github/LaurenceRawlings/savify/
      :alt: Updates
 
-**This is a fork of the original** `Savify <https://github.com/LaurenceRawlings/savify/>`__
+
+
+**This is a fork of the original** `Savify <https://github.com/LaurenceRawlings/savify/>`__ with some changes to make it functional on modern linux and macOS, it will likely receive no functionality updates, and contains no Docker image.
 
 `Savify <https://github.com/LaurenceRawlings/savify>`__ is a python
 library that downloads songs from a selected provider (by default YouTube),
@@ -65,8 +67,6 @@ are not ripped directly from Spotify, but are instead downloaded from other
 sources such as YouTube and Soundcloud using the youtube-dl python library.
 Spotify is only used to gather accurate meta information to be embedded into
 the downloaded song files.
-
-**Visit the official Docker Hub image repository and get the latest Docker image: https://hub.docker.com/repository/docker/laurencerawlings/savify**
 
 **Any questions or feedback join the** `Discord Server <https://discordapp.com/invite/SPuPEda>`__
 
@@ -93,33 +93,15 @@ retrieve the song details from your playlist.
 Installation
 ============
 
-If you are on Windows you can download the latest pre-packed executable
-package (which I recommend as you will not have to provide a Savify API key),
-or you can download the python library and run the module directly using the CLI.
-
-Download the latest release
----------------------------
-
-Go `here <https://github.com/LaurenceRawlings/savify/releases>`__ to download
-the latest Savify.exe then make sure you have:
-
-- FFmpeg downloaded and it added to your Path
-- Spotify API credentials added to your environment variables
-
-That is it, you should be good to go! See some usage examples below.
-
-Using the Python module
------------------------
-
-``$ pip install -U savify``
-
-Build Savify as Docker container
+Building Savify on your system
 --------------------------------
 
-Clone the repository and make sure you are in the root directory.
+Clone this repository and make sure you are in the root directory.
 Execute the following build command:
 
-``$ docker build -t savify:dev .``
+``$ make install``
+
+You make be required to install make (if for some reason it was not included in your distro)
 
 Usage
 =====
@@ -129,12 +111,6 @@ however support for Spotify URIs will be added in the future.
 
 CLI
 ---
-
-If you have downloaded the latest Savify.exe from the releases page
-open your terminal and navigate to the same directory as the binary,
-then you can run:
-
-``$ Savify.exe``
 
 If you are using the Python package and savify is installed to your
 site-packages and your pip folder is in your PATH (which it should be
@@ -189,81 +165,12 @@ Download Defaults
 :Quality: best
 :Format: mp3
 :Path:
-     Windows: HOME/AppData/Roaming/Savify/downloads
-
      Linux: HOME/.local/share/Savify/downloads
 
      MacOS: HOME/Library/Application Support/Savify/downloads
 :Grouping: no grouping
 
 For more usage examples read the `docs <https://savify.readthedocs.io>`__.
-
-Docker
-------
-
-Run savify inside a container which can also be attached to other
-container's networks. This is handy if you want to run multiple instances
-of savify and/or want to use VPNs for downloading.
-You can use your self-built Docker image or the official one. Make sure to
-use the right Docker image name and tag.
-
-``$ docker run laurencerawlings/savify:latest``
-
-If no argument is specified, the container will print the help page. Simply
-append your arguments, make sure you mount a folder from your host so
-downloads are persistent (``-v``) - ``pwd`` is used to mount the current directory
-you are in - and remove the container when done (``--rm``). You have to specify your
-Spotify client ID and secret by using environment variables (``-e``):
-
-.. code-block:: bash
-
-    $ docker run --rm -v "`pwd`:/root/.local/share/Savify/downloads" \
-               -e SPOTIPY_CLIENT_ID=client_id \
-               -e SPOTIPY_CLIENT_SECRET=client_secret \
-               laurencerawlings/savify:latest "https://open.spotify.com/playlist/..."
-
-If you want to preserve your logs, you can mount the logging directory by simply
-adding the following argument to the docker run command: ``-v "./logs:/root/.local/share/Savify/logs"``
-
-Automate with a shell script:
-
-``$ nano savify.sh``
-
-.. code-block:: sh
-
-    #!/bin/bash
-    docker run --rm -v "`pwd`:/root/.local/share/Savify/downloads" \
-               -e SPOTIPY_CLIENT_ID=client_id \
-               -e SPOTIPY_CLIENT_SECRET=client_secret \
-               laurencerawlings/savify:latest $1
-
-Then run with:
-
-``$ sh savify.sh "https://open.spotify.com/track/4Dju9g4NCz0LDxwcjonSvI"``
-
-You also have the option to quickstart using our docker script which have an integrated VPN-check
-to see if there are any VPN containers the script can connect to. The script is perfect for being
-scheduled with cron:
-
-.. code-block:: sh
-
-    $ wget https://github.com/laurencerawlings/savify/latest/download/savify-docker-scripts.zip
-    $ unzip savify-docker-scripts.zip && rm savify-docker-scripts.zip
-    $ cd savify-docker-scripts/
-
-You then have to edit the configuration file with your preferred text editor (we prefer nano),
-save it (Ctrl + X, Y for saving changes in nano) and rename it to ``config.sh``.
-
-.. code-block:: sh
-
-    $ nano template.config.sh
-    $ mv template.config.sh config.sh
-
-You can then run the script:
-
-.. code-block:: sh
-
-    $ bash bulk-download.sh
 
 
 Spotify Application
