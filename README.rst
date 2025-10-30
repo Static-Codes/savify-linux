@@ -41,6 +41,7 @@ Savify
      :target: https://pyup.io/repos/github/LaurenceRawlings/savify/
      :alt: Updates
 
+**This is a fork of the original** `Savify <https://github.com/LaurenceRawlings/savify/>`__
 
 `Savify <https://github.com/LaurenceRawlings/savify>`__ is a python
 library that downloads songs from a selected provider (by default YouTube),
@@ -65,7 +66,7 @@ sources such as YouTube and Soundcloud using the youtube-dl python library.
 Spotify is only used to gather accurate meta information to be embedded into
 the downloaded song files.
 
-**Visit our official Docker Hub image repository and get the latest Docker image: https://hub.docker.com/repository/docker/laurencerawlings/savify**
+**Visit the official Docker Hub image repository and get the latest Docker image: https://hub.docker.com/repository/docker/laurencerawlings/savify**
 
 **Any questions or feedback join the** `Discord Server <https://discordapp.com/invite/SPuPEda>`__
 
